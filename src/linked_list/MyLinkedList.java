@@ -8,10 +8,6 @@ public class MyLinkedList<E> implements Iterable<E> {
     private int size;
 
     public MyLinkedList() {
-        this.head = new Node<E>(null);
-        this.tail = new Node<E>(null);
-        this.head.next = this.tail;
-        this.tail.prev = this.head;
     }
 
     public int getSize() {
@@ -20,7 +16,6 @@ public class MyLinkedList<E> implements Iterable<E> {
 
     public E get() {
         return this.head.getData();
-//        return this.head.getData();
     }
 
     public Node<E> set(Node<E> node) {
@@ -29,40 +24,41 @@ public class MyLinkedList<E> implements Iterable<E> {
         return node;
     }
 
-    public Node<E> add(E element) {
-        this.size++;
-        Node<E> next = new Node<E>(element);
-
-        if (this.size == 1){
-            this.head = next;
-            this.tail = next;
-        } else if (size == 2){
-            next.prev = this.head;
-            this.tail.next = next;
-            this.tail = next;
-        } else {
-            next.prev = this.tail;
-            this.tail.next = next;
-            this.tail = next;
-        }
-
-        return next;
+    public boolean add(E e) {
+        linkLast(e);
+        return true;
     }
+
 
     public void remove() {
         this.head = this.head.next;
         this.tail = this.tail.prev;
     }
 
+    /**
+     * Links e as last element.
+     */
+    void linkLast(E e) {
+        final Node<E> l = tail;
+        final Node<E> newNode = new Node<>(e);
+
+        tail = newNode;
+        if (l == null)
+            head = newNode;
+        else
+            l.next = newNode;
+        size++;
+    }
+
     @Override
     public Iterator iterator() {
         return new Iterator<E>() {
             int counter = 0;
+
             @Override
             public boolean hasNext() {
                 return size != counter;
             }
-
 
             @Override
             public E next() {
