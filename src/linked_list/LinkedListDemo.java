@@ -16,6 +16,14 @@ public class LinkedListDemo {
         for (String node: linkedList){
             System.out.println(node);
         }
+
+        linkedList.set(2, "2 element");
+
+        for (String node: linkedList){
+            System.out.println(node);
+        }
+
+
     }
 
 }
