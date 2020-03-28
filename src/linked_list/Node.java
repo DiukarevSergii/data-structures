@@ -10,10 +10,6 @@ class Node<E> {
         this.data = data;
     }
 
-    public E getData() {
-        return data;
-    }
-
     @Override
     public String toString() {
         return "Node{" +
