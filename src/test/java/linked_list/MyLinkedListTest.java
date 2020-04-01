@@ -1,19 +1,30 @@
 package linked_list;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
+import org.mockito.junit.MockitoJUnit;
+import org.mockito.junit.MockitoRule;
 
-import java.util.Iterator;
+import java.util.Arrays;
 import java.util.List;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.mock;
 
+import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.*;
 
 public class MyLinkedListTest {
+    @Rule
+    public MockitoRule rule = MockitoJUnit.rule();
 
-    private String firstElement = "First element";
-    private String secondElement = "2";
-    private String thirdElement = "3 element";
+    @Captor
+    private ArgumentCaptor<List<String>> captor;
+
+    final private String firstElement = "First element";
+    final private String secondElement = "2";
+    final private String thirdElement = "3 element";
 
     @Test
     public void testGet() {
@@ -25,15 +36,28 @@ public class MyLinkedListTest {
 
     @Test
     public void testAdd() {
-        MyLinkedList<String> linkedList = new MyLinkedList<>();
-        linkedList.add(firstElement);
-        linkedList.add(secondElement);
-        linkedList.add(thirdElement);
+        List<String> asList = Arrays.asList(firstElement, secondElement, thirdElement, firstElement);
+        final List<String> mockedList = mock(List.class);
+        mockedList.addAll(asList);
+        verify(mockedList).addAll(captor.capture());
 
-        Iterator<String> iterator = linkedList.iterator();
-        assertEquals(iterator.next(), firstElement);
-        assertEquals(iterator.next(), secondElement);
-        assertEquals(iterator.next(), thirdElement);
+        final List<String> capturedArgument = captor.getValue();
+        assertThat(capturedArgument, hasItems(firstElement, secondElement, thirdElement));
+        assertThat(capturedArgument, equalTo(asList));
+        // should emit error
+        // assertThat(capturedArgument, equalTo(Arrays.asList(firstElement)));
+        assertThat(capturedArgument, not(equalTo(Arrays.asList(firstElement))));
+        // should emit error
+        // assertThat(capturedArgument, not(equalTo(asList)));
+        assertEquals(capturedArgument, asList);
+
+        List<String> mockList = mock(MyLinkedList.class);
+        mockList.add(firstElement);
+        mockList.add(secondElement);
+        mockList.add(thirdElement);
+
+        verify(mockList, atLeast(1)).add(firstElement);
+        verify(mockList, times(3)).add(anyString());
     }
 
     @Test
@@ -46,12 +70,4 @@ public class MyLinkedListTest {
         assertEquals(linkedList.size(), 3);
     }
 
-    @Test
-    public void mockitoTest() {
-        List<String> mockList = mock(MyLinkedList.class);
-        mockList.add("Pankaj");
-        mockList.size();
-
-        verify(mockList).add("Pankaj");
-    }
 }
