@@ -1,9 +1,8 @@
 package linked_list;
 
-import java.util.Iterator;
-import java.util.NoSuchElementException;
+import java.util.*;
 
-public class MyLinkedList<E> implements Iterable<E> {
+public class MyLinkedList<E> implements List<E> {
     private Node<E> first;
     private Node<E> last;
     private int size;
@@ -15,10 +14,6 @@ public class MyLinkedList<E> implements Iterable<E> {
     }
 
     // todo implement addAll constructor
-
-    public int getSize() {
-        return size;
-    }
 
     public E get() {
         return this.first.data;
@@ -39,6 +34,41 @@ public class MyLinkedList<E> implements Iterable<E> {
         E oldValue = node.data;
         node.data = element;
         return oldValue;
+    }
+
+    @Override
+    public void add(int index, E element) {
+
+    }
+
+    @Override
+    public E remove(int index) {
+        return null;
+    }
+
+    @Override
+    public int indexOf(Object o) {
+        return 0;
+    }
+
+    @Override
+    public int lastIndexOf(Object o) {
+        return 0;
+    }
+
+    @Override
+    public ListIterator<E> listIterator() {
+        return null;
+    }
+
+    @Override
+    public ListIterator<E> listIterator(int index) {
+        return null;
+    }
+
+    @Override
+    public List<E> subList(int fromIndex, int toIndex) {
+        return null;
     }
 
     // todo optimize performance
@@ -65,11 +95,46 @@ public class MyLinkedList<E> implements Iterable<E> {
         return true;
     }
 
+    @Override
+    public boolean remove(Object o) {
+        return false;
+    }
 
-//    public void remove() {
-//        this.first = this.first.next;
-//        this.last = this.last.prev;
-//    }
+    @Override
+    public boolean containsAll(Collection<?> c) {
+        return false;
+    }
+
+    @Override
+    public boolean addAll(Collection<? extends E> c) {
+        return false;
+    }
+
+    @Override
+    public boolean addAll(int index, Collection<? extends E> c) {
+        return false;
+    }
+
+    @Override
+    public boolean removeAll(Collection<?> c) {
+        return false;
+    }
+
+    @Override
+    public boolean retainAll(Collection<?> c) {
+        return false;
+    }
+
+    @Override
+    public void clear() {
+
+    }
+
+    @Override
+    public E get(int index) {
+        return null;
+    }
+
 
     /**
      * Links e as last element.
@@ -90,8 +155,33 @@ public class MyLinkedList<E> implements Iterable<E> {
     }
 
     @Override
+    public int size() {
+        return size;
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return false;
+    }
+
+    @Override
+    public boolean contains(Object o) {
+        return false;
+    }
+
+    @Override
     public Iterator<E> iterator() {
         return new MyIterator();
+    }
+
+    @Override
+    public Object[] toArray() {
+        return new Object[0];
+    }
+
+    @Override
+    public <T> T[] toArray(T[] a) {
+        return null;
     }
 
     class MyIterator implements Iterator<E>{
