@@ -3,6 +3,9 @@ package linked_list;
 import org.junit.Test;
 
 import java.util.Iterator;
+import java.util.List;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.mock;
 
 import static org.junit.Assert.assertEquals;
 
@@ -40,6 +43,15 @@ public class MyLinkedListTest {
         linkedList.add(secondElement);
         linkedList.add(thirdElement);
 
-        assertEquals(linkedList.getSize(), 3);
+        assertEquals(linkedList.size(), 3);
+    }
+
+    @Test
+    public void mockitoTest() {
+        List<String> mockList = mock(MyLinkedList.class);
+        mockList.add("Pankaj");
+        mockList.size();
+
+        verify(mockList).add("Pankaj");
     }
 }
